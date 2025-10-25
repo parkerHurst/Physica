@@ -78,7 +78,7 @@ class PhysicaWindow(Adw.ApplicationWindow):
         self.game_grid.set_min_children_per_line(1)  # Allow single item per row
         self.game_grid.set_row_spacing(24)
         self.game_grid.set_column_spacing(24)
-        self.game_grid.set_homogeneous(True)
+        self.game_grid.set_homogeneous(False)  # Don't make items homogeneous to prevent stretching
         self.game_grid.set_selection_mode(Gtk.SelectionMode.NONE)
         main_box.append(self.game_grid)
         

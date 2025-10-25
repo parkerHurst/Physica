@@ -289,6 +289,8 @@ class FormatNewCard(Gtk.Box):
         self.add_css_class("card")
         self.add_css_class("format-new-card")
         self.set_size_request(200, 160)  # Reduced height to match game cards
+        self.set_hexpand(False)  # Don't expand horizontally
+        self.set_vexpand(False)  # Don't expand vertically
         
         # Make it clickable
         gesture = Gtk.GestureClick()

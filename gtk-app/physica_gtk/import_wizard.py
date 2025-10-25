@@ -1,6 +1,7 @@
 """Import Wizard for creating game cartridges"""
 
 import gi
+import os
 import subprocess
 import threading
 from pathlib import Path
@@ -480,8 +481,20 @@ class ImportWizardDialog(Adw.Window):
             GLib.idle_add(self.prep_status_label.set_label, f"Formatting as ext4 with label {safe_label}...")
             
             # Use pkexec to run mkfs.ext4 with elevated privileges
+            # Try different possible locations for mkfs.ext4
+            mkfs_paths = ['/sbin/mkfs.ext4', '/usr/sbin/mkfs.ext4', 'mkfs.ext4']
+            mkfs_cmd = None
+            
+            for path in mkfs_paths:
+                if os.path.exists(path) or path == 'mkfs.ext4':
+                    mkfs_cmd = path
+                    break
+            
+            if not mkfs_cmd:
+                raise Exception("mkfs.ext4 not found in system")
+            
             format_result = subprocess.run(
-                ['pkexec', 'mkfs.ext4', '-F', '-L', safe_label, self.usb_device],
+                ['pkexec', mkfs_cmd, '-F', '-L', safe_label, self.usb_device],
                 capture_output=True,
                 text=True
             )

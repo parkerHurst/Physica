@@ -106,7 +106,7 @@ echo -e "${YELLOW}  Installing required system packages...${NC}"
 # Detect package manager and install system packages
 if command -v apt &> /dev/null; then
     echo "  Installing system packages via apt..."
-    sudo apt install -y python3-dbus python3-gi python3-cairo python3-pyudev e2fsprogs udisks2
+    sudo apt install -y python3-dbus python3-gi python3-cairo python3-pyudev e2fsprogs util-linux mount parted dosfstools udisks2
 elif command -v pacman &> /dev/null; then
     echo "  Installing system packages via pacman..."
     sudo pacman -S --noconfirm python-dbus python-gobject python-cairo python-pyudev e2fsprogs udisks2

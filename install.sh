@@ -120,11 +120,16 @@ source "$INSTALL_DIR/venv/bin/activate"
 
 pip install --upgrade pip > /dev/null 2>&1
 
+# Install service dependencies
 cd "$INSTALL_DIR/service"
 pip install -r requirements.txt
 
+# Install GTK app dependencies  
 cd "$INSTALL_DIR/gtk-app"
 pip install -r requirements.txt
+
+# Ensure toml is installed (critical for TOML file handling)
+pip install toml>=0.10.2
 
 deactivate
 

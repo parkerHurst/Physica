@@ -26,10 +26,10 @@ optdepends=(
 provides=('physica')
 conflicts=('physica-git')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('766de993e32872f82c5730ed821c946b76ac8f02c8f830990e92fc17120e77db')
+sha256sums=('723402c61a621d8e9df9db70200f117f8b5ad90ff4767b953e52178c5420d12c')
 
 package() {
-    cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/Physica-$pkgver"
     
     # Create installation directory
     install -dm755 "$pkgdir/opt/physica"

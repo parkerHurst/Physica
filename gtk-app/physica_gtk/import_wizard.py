@@ -466,6 +466,7 @@ class ImportWizardDialog(Adw.Window):
     def _prepare_usb_thread(self):
         """Prepare USB drive (runs in background thread)"""
         try:
+            import os
             from gi.repository import GLib
             
             # Step 1: Unmount
@@ -488,7 +489,10 @@ class ImportWizardDialog(Adw.Window):
             mkfs_cmd = None
             
             for path in mkfs_paths:
-                if path == 'mkfs.ext4' or os.path.exists(path):
+                if path == 'mkfs.ext4':
+                    mkfs_cmd = path
+                    break
+                elif os.path.exists(path):
                     mkfs_cmd = path
                     break
             

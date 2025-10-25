@@ -26,8 +26,8 @@ cp -r scripts "$BUILD_DIR/"
 cp run_service.sh "$BUILD_DIR/"
 cp install.sh "$BUILD_DIR/"
 cp uninstall.sh "$BUILD_DIR/"
-cp README.md "$BUILD_DIR/"
 cp CONTRIBUTING.md "$BUILD_DIR/"
+cp LICENSE "$BUILD_DIR/"
 cp .gitignore "$BUILD_DIR/"
 
 # Make scripts executable

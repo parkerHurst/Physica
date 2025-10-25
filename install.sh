@@ -5,8 +5,8 @@
 set -e  # Exit on error
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║           Physica Installation Script v1.0                 ║"
-echo "║     Physical Game Cartridge Manager for Steam Deck         ║"
+echo "║            Physica Installation Script v1.0-EA             ║"
+echo "║         Physical Game Cartridge Manager for Linux          ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -72,15 +72,31 @@ cp run_service.sh "$INSTALL_DIR/"
 
 echo -e "${GREEN}✓ Files copied${NC}"
 
+# Create virtual environment
+echo ""
+echo -e "${YELLOW}➜ Creating virtual environment...${NC}"
+
+cd "$INSTALL_DIR"
+python3 -m venv venv
+
+echo -e "${GREEN}✓ Virtual environment created${NC}"
+
 # Install Python dependencies
 echo ""
 echo -e "${YELLOW}➜ Installing Python dependencies...${NC}"
 
+# Activate venv and install dependencies
+source "$INSTALL_DIR/venv/bin/activate"
+
+pip install --upgrade pip > /dev/null 2>&1
+
 cd "$INSTALL_DIR/service"
-python3 -m pip install --user -r requirements.txt
+pip install -r requirements.txt
 
 cd "$INSTALL_DIR/gtk-app"
-python3 -m pip install --user -r requirements.txt
+pip install -r requirements.txt
+
+deactivate
 
 echo -e "${GREEN}✓ Dependencies installed${NC}"
 
@@ -91,16 +107,18 @@ echo -e "${YELLOW}➜ Creating launcher scripts...${NC}"
 # Service launcher
 cat > "$BIN_DIR/physica-service" << 'EOF'
 #!/bin/bash
+VENV="$HOME/.local/share/physica-app/venv"
 cd "$HOME/.local/share/physica-app/service"
-exec python3 -u main.py "$@"
+exec "$VENV/bin/python" -u main.py "$@"
 EOF
 chmod +x "$BIN_DIR/physica-service"
 
 # GUI launcher
 cat > "$BIN_DIR/physica" << 'EOF'
 #!/bin/bash
+VENV="$HOME/.local/share/physica-app/venv"
 cd "$HOME/.local/share/physica-app/gtk-app"
-exec python3 run.py "$@"
+exec "$VENV/bin/python" run.py "$@"
 EOF
 chmod +x "$BIN_DIR/physica"
 

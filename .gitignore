@@ -31,6 +31,9 @@ Thumbs.db
 test_*.py
 cleanup_*.sh
 
+# AUR (managed in separate AUR repository)
+.SRCINFO
+
 # Configuration (user-specific)
 # Note: Keep example configs in repo, ignore user configs
 config.toml

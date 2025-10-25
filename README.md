@@ -62,8 +62,9 @@ physica
 ```
 
 The installer will:
-- ✅ Check dependencies
-- ✅ Install Python packages
+- ✅ Check dependencies (Python 3.11+, GTK4)
+- ✅ Create isolated virtual environment
+- ✅ Install Python packages (no system conflicts!)
 - ✅ Create launchers in `~/.local/bin`
 - ✅ Add desktop entry
 - ✅ Configure autostart for the service
@@ -190,8 +191,6 @@ Create a distribution package:
 ```
 
 This creates `build/physica-1.0-EA.tar.gz` ready for distribution.
-
-See [DISTRIBUTION.md](DISTRIBUTION.md) for complete packaging and distribution guide.
 
 ### For End Users
 

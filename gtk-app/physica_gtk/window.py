@@ -75,7 +75,7 @@ class PhysicaWindow(Adw.ApplicationWindow):
         self.game_grid = Gtk.FlowBox()
         self.game_grid.set_valign(Gtk.Align.START)
         self.game_grid.set_max_children_per_line(30)
-        self.game_grid.set_min_children_per_line(2)
+        self.game_grid.set_min_children_per_line(1)  # Allow single item per row
         self.game_grid.set_row_spacing(24)
         self.game_grid.set_column_spacing(24)
         self.game_grid.set_homogeneous(True)

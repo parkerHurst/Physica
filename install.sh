@@ -100,21 +100,19 @@ echo -e "${GREEN}✓ Virtual environment created with system site packages acces
 echo ""
 echo -e "${YELLOW}➜ Installing Python dependencies...${NC}"
 
-# Check if we need to install system packages
-if ! python3 -c "import dbus" 2>/dev/null || ! python3 -c "import gi" 2>/dev/null || ! python3 -c "import cairo" 2>/dev/null; then
-    echo -e "${YELLOW}  Installing required system packages...${NC}"
-    
-    # Detect package manager and install system packages
-    if command -v apt &> /dev/null; then
-        echo "  Installing system packages via apt..."
-        sudo apt install -y python3-dbus python3-gi python3-cairo python3-pyudev e2fsprogs udisks2
-    elif command -v pacman &> /dev/null; then
-        echo "  Installing system packages via pacman..."
-        sudo pacman -S --noconfirm python-dbus python-gobject python-cairo python-pyudev e2fsprogs udisks2
-    elif command -v dnf &> /dev/null; then
-        echo "  Installing system packages via dnf..."
-        sudo dnf install -y python3-dbus python3-gobject python3-cairo python3-pyudev e2fsprogs udisks2
-    fi
+# Always install system packages to ensure all dependencies are available
+echo -e "${YELLOW}  Installing required system packages...${NC}"
+
+# Detect package manager and install system packages
+if command -v apt &> /dev/null; then
+    echo "  Installing system packages via apt..."
+    sudo apt install -y python3-dbus python3-gi python3-cairo python3-pyudev e2fsprogs udisks2
+elif command -v pacman &> /dev/null; then
+    echo "  Installing system packages via pacman..."
+    sudo pacman -S --noconfirm python-dbus python-gobject python-cairo python-pyudev e2fsprogs udisks2
+elif command -v dnf &> /dev/null; then
+    echo "  Installing system packages via dnf..."
+    sudo dnf install -y python3-dbus python3-gobject python3-cairo python3-pyudev e2fsprogs udisks2
 fi
 
 # Activate venv and install dependencies

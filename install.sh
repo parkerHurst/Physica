@@ -5,7 +5,7 @@
 set -e  # Exit on error
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║            Physica Installation Script v1.0-EA             ║"
+echo "║            Physica Installation Script v1.0.1-EA           ║"
 echo "║         Physical Game Cartridge Manager for Linux          ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""

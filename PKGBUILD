@@ -26,7 +26,7 @@ optdepends=(
 provides=('physica')
 conflicts=('physica-git')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('766de993e32872f82c5730ed821c946b76ac8f02c8f830990e92fc17120e77db  v1.0-EA.tar.gz')
+sha256sums=('766de993e32872f82c5730ed821c946b76ac8f02c8f830990e92fc17120e77db')
 
 package() {
     cd "$srcdir/$pkgname-$pkgver"

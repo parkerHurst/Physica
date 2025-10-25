@@ -1,0 +1,22 @@
+[Unit]
+Description=Physica Game Cartridge Manager Service
+After=network.target local-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m physica.service
+Restart=on-failure
+RestartSec=5
+User=deck
+Environment=PYTHONPATH=/usr/lib/physica
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/deck/.config/physica /home/deck/.cache/physica
+
+[Install]
+WantedBy=multi-user.target
+

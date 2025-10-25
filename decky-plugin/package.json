@@ -1,0 +1,22 @@
+{
+  "name": "physica-decky",
+  "version": "1.0.0",
+  "description": "Physica game cartridge manager for Decky Loader",
+  "scripts": {
+    "build": "tsc && rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "author": "Physica Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "decky-frontend-lib": "^3.21.0",
+    "rollup": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "pnpmPackageManager": "pnpm@8.5.1"
+}
+

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Physica specific
+*.log
+test_*.py
+cleanup_*.sh
+
+# Configuration (user-specific)
+# Note: Keep example configs in repo, ignore user configs
+config.toml
+
+# Temporary files
+*.tmp
+*.bak

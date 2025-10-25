@@ -1,0 +1,105 @@
+/* Physica GTK Custom Styles - Memory Card Manager */
+
+/* ========== Game Cards ========== */
+
+.game-card {
+    background: @card_bg_color;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.game-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Card state borders */
+.card-inserted {
+    border-color: @success_color;
+}
+
+.card-offline {
+    border-color: @borders;
+    opacity: 0.7;
+}
+
+.card-running {
+    border-color: @accent_color;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    50% {
+        box-shadow: 0 4px 20px @accent_color;
+    }
+}
+
+/* Format new card */
+.format-new-card {
+    background: @card_bg_color;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px dashed @borders;
+}
+
+.format-new-card:hover {
+    border-color: @accent_color;
+    background: alpha(@accent_color, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+/* ========== Status Indicators ========== */
+
+.success {
+    color: @success_color;
+}
+
+.accent {
+    color: @accent_color;
+}
+
+/* ========== Buttons ========== */
+
+button.pill {
+    border-radius: 999px;
+    padding: 10px 28px;
+    font-weight: 600;
+}
+
+/* ========== Utility Classes ========== */
+
+.dim-label {
+    opacity: 0.6;
+}
+
+/* ========== Import Wizard ========== */
+
+/* USB drive list styling */
+.usb-drive-row {
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.usb-drive-row:hover {
+    background: alpha(@accent_color, 0.1);
+}
+
+/* Progress spinner */
+.spinner-large {
+    min-width: 64px;
+    min-height: 64px;
+}
+
+/* ========== Empty States ========== */
+
+.empty-state-icon {
+    opacity: 0.3;
+    font-size: 64px;
+}

@@ -92,9 +92,9 @@ echo ""
 echo -e "${YELLOW}➜ Creating virtual environment...${NC}"
 
 cd "$INSTALL_DIR"
-python3 -m venv venv
+python3 -m venv --system-site-packages venv
 
-echo -e "${GREEN}✓ Virtual environment created${NC}"
+echo -e "${GREEN}✓ Virtual environment created with system site packages access${NC}"
 
 # Install Python dependencies
 echo ""

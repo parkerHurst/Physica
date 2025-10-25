@@ -3,6 +3,11 @@
 # - python3-gi (or python-gobject on Arch)
 # - python3-pyudev (or python-pyudev on Arch)
 
+# Note: dbus-python and PyGObject are installed via pip as fallback
+# if system packages are not available
+dbus-python>=1.3.2
+PyGObject>=3.42.0
+
 pyudev>=0.24.0
 psutil>=5.9.0
 toml>=0.10.2

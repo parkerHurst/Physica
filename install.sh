@@ -5,7 +5,7 @@
 set -e  # Exit on error
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║            Physica Installation Script v1.0.1-EA           ║"
+echo "║            Physica Installation Script v1.0.1              ║"
 echo "║         Physical Game Cartridge Manager for Linux          ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
@@ -99,6 +99,23 @@ echo -e "${GREEN}✓ Virtual environment created${NC}"
 # Install Python dependencies
 echo ""
 echo -e "${YELLOW}➜ Installing Python dependencies...${NC}"
+
+# Check if we need to install build dependencies
+if ! python3 -c "import dbus" 2>/dev/null || ! python3 -c "import gi" 2>/dev/null; then
+    echo -e "${YELLOW}  Installing build dependencies for dbus-python and PyGObject...${NC}"
+    
+    # Detect package manager and install build dependencies
+    if command -v apt &> /dev/null; then
+        echo "  Installing build dependencies via apt..."
+        sudo apt install -y python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake libcairo2-dev libgirepository1.0-dev
+    elif command -v pacman &> /dev/null; then
+        echo "  Installing build dependencies via pacman..."
+        sudo pacman -S --noconfirm python-dbus python-gobject
+    elif command -v dnf &> /dev/null; then
+        echo "  Installing build dependencies via dnf..."
+        sudo dnf install -y python3-devel python3-dbus python3-gobject
+    fi
+fi
 
 # Activate venv and install dependencies
 source "$INSTALL_DIR/venv/bin/activate"

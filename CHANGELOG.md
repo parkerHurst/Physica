@@ -42,14 +42,14 @@ All notable changes to Physica will be documented in this file.
 
 ---
 
-## [1.0.1-EA] - 2025-10-25
+## [1.0.1] - 2025-10-25
 
 ### Bug Fixes
 - 🔧 **Fixed Debian/Ubuntu installation issues**
   - Resolved `metadata-generation-failed` error with `dbus-python`
-  - Added proper build dependency checks (`pkg-config`, `cmake`, `dbus-1`)
-  - Updated installer to use system packages for problematic dependencies
-  - Added comprehensive troubleshooting section to README
+  - Fixed `ModuleNotFoundError` for `gi` and `dbus` modules in virtual environment
+  - Added automatic build dependency detection and installation
+  - Updated installer to handle missing system packages gracefully
 
 ### Improvements
 - 📚 **Enhanced documentation**
@@ -58,16 +58,17 @@ All notable changes to Physica will be documented in this file.
   - Clear error messages with solution commands
 
 ### Technical Changes
-- 🛠️ **Updated requirements.txt**
-  - Removed `dbus-python` and `PyGObject` from pip requirements
-  - Now uses system packages (`python3-dbus`, `python3-gi`) to avoid build issues
-  - Added comments explaining system package dependencies
+- 🛠️ **Updated installer logic**
+  - Automatically detects missing build dependencies
+  - Installs build tools via package manager when needed
+  - Falls back to pip installation if system packages unavailable
+  - Added comprehensive build dependency packages for Debian/Ubuntu
 
 ---
 
 ## Version History
 
-### v1.0.1-EA (2025-10-25)
+### v1.0.1 (2025-10-25)
 **Fix:** Debian/Ubuntu installation issues - proper build dependencies and system package usage
 
 ### v1.0-EA-rev2 (2025-10-25)

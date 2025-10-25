@@ -76,8 +76,7 @@ The installer will:
 sudo apt update
 sudo apt install python3-dev python3-gi python3-dbus libgtk-4-1 libadwaita-1-0
 
-# If you get build errors, also install:
-sudo apt install python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake
+# The installer will automatically install additional build dependencies if needed
 ```
 
 **Arch/Manjaro users**:
@@ -331,12 +330,10 @@ python3 -c "from physica_gtk.game_card import GameCard; print('OK')"
 ### Installation Issues
 
 **`metadata-generation-failed` error on Debian/Ubuntu:**
+The installer now automatically detects and installs build dependencies. If you still get this error:
 ```bash
-# Install build dependencies
-sudo apt install python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake
-
-# Or use system packages instead
-sudo apt install python3-dbus python3-gi
+# Install build dependencies manually
+sudo apt install python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake libcairo2-dev libgirepository1.0-dev
 ```
 
 **`externally-managed-environment` error:**

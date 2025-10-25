@@ -46,50 +46,58 @@ Perfect for Steam Deck users who want a physical game collection!
 
 ## 🚀 Quick Start
 
-### 1. Clone the Repository
+### Option A: Automated Installation (Recommended)
 
 ```bash
+# 1. Clone or download
 git clone https://github.com/parkerHurst/Physica.git
 cd Physica
+
+# 2. Run installer
+./install.sh
+
+# 3. Start service
+physica-service
+
+# 4. Launch GUI (in new terminal)
+physica
 ```
 
-### 2. Set Up Python Virtual Environment
+The installer will:
+- ✅ Check dependencies
+- ✅ Install Python packages
+- ✅ Create launchers in `~/.local/bin`
+- ✅ Add desktop entry
+- ✅ Configure autostart for the service
+
+### Option B: Manual Development Setup
+
+For development or if you prefer manual control:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+# 1. Clone the repository
+git clone https://github.com/parkerHurst/Physica.git
+cd Physica
 
-### 3. Install Service Dependencies
-
-```bash
+# 2. Install service dependencies
 cd service
-pip install -r requirements.txt
+pip install --user -r requirements.txt
 cd ..
-```
 
-### 4. Install GTK App Dependencies
-
-```bash
+# 3. Install GTK app dependencies
 cd gtk-app
-pip install -r requirements.txt
+pip install --user -r requirements.txt
 cd ..
-```
 
-### 5. Run the Service
-
-```bash
+# 4. Run the service
 ./run_service.sh
-```
 
-Keep this terminal open. The service will run in the foreground and show logs. In the future, this will run in the background.
-
-### 6. Launch the GTK App (in a new terminal)
-
-```bash
+# 5. Launch the GTK app (in new terminal)
 cd gtk-app
 python3 run.py
 ```
+
+Keep the service terminal open. The service will run in the foreground and show logs. In the future, this will run in the background.
 
 ---
 
@@ -165,8 +173,31 @@ Physica/
 ├── scripts/             # Utility scripts
 │   └── import_game.py   # CLI game import tool
 │
-└── run_service.sh       # Service launcher
+├── install.sh           # Automated installer
+├── uninstall.sh         # Uninstaller
+├── package.sh           # Create distribution tarball
+└── run_service.sh       # Service launcher (manual mode)
 ```
+
+---
+
+## 📦 Distribution
+
+### For Developers
+
+Create a distribution package:
+
+```bash
+./package.sh
+```
+
+This creates `build/physica-1.0-EA.tar.gz` ready for distribution.
+
+See [DISTRIBUTION.md](DISTRIBUTION.md) for complete packaging and distribution guide.
+
+### For End Users
+
+Download the latest release from [GitHub Releases](https://github.com/parkerHurst/Physica/releases), extract, and run `./install.sh`.
 
 ---
 

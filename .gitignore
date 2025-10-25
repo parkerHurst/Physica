@@ -11,6 +11,10 @@ ENV/
 dist/
 build/
 
+# Distribution
+*.tar.gz
+*.tar.gz.sha256
+
 # IDE
 .vscode/
 .idea/

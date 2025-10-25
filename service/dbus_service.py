@@ -113,6 +113,9 @@ class PhysicaDBusService(dbus.service.Object):
         Returns:
             Array of game info dictionaries from registry
         """
+        # Force refresh registry from file to ensure we have latest data
+        self.registry._load()
+        
         entries = self.registry.get_all_entries()
         result = []
         

@@ -80,6 +80,10 @@ class CartridgeRegistry:
         
         try:
             data = toml.load(self.registry_file)
+            
+            # Clear existing entries
+            self.entries.clear()
+            
             for entry_data in data.get("cartridges", []):
                 entry = CartridgeRegistryEntry.from_dict(entry_data)
                 self.entries[entry.uuid] = entry

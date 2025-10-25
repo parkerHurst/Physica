@@ -97,6 +97,15 @@ class PhysicaService:
         
         # Initial scan
         print("Performing initial cartridge scan...")
+        
+        # First, mark all games as ejected (not inserted)
+        print("  Marking all games as ejected...")
+        for entry in self.registry.get_all_entries():
+            if entry.is_inserted:
+                print(f"    📤 {entry.game_name}")
+                self.registry.mark_ejected(entry.uuid)
+        
+        # Then scan for currently inserted cartridges
         inserted, removed = self.scanner.refresh_cartridges()
         cartridges = self.scanner.list_cartridges()
         print(f"  Found {len(cartridges)} cartridge(s)\n")

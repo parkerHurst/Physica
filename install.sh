@@ -55,6 +55,9 @@ if ! python3 -c "import dbus" 2>/dev/null; then
     echo "  Arch/Manjaro: sudo pacman -S python-dbus"
     echo "  Fedora: sudo dnf install python3-dbus"
     echo "  Ubuntu/Debian: sudo apt install python3-dbus"
+    echo ""
+    echo "If you get build errors, also install:"
+    echo "  Ubuntu/Debian: sudo apt install python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake"
     exit 1
 fi
 echo -e "${GREEN}✓ D-Bus Python bindings found${NC}"

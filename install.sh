@@ -47,6 +47,18 @@ if ! python3 -c "import gi; gi.require_version('Gtk', '4.0')" 2>/dev/null; then
 fi
 echo -e "${GREEN}✓ GTK4 found${NC}"
 
+# Check for D-Bus Python bindings
+if ! python3 -c "import dbus" 2>/dev/null; then
+    echo -e "${RED}✗ D-Bus Python bindings not found${NC}"
+    echo ""
+    echo "Please install D-Bus dependencies:"
+    echo "  Arch/Manjaro: sudo pacman -S python-dbus"
+    echo "  Fedora: sudo dnf install python3-dbus"
+    echo "  Ubuntu/Debian: sudo apt install python3-dbus"
+    exit 1
+fi
+echo -e "${GREEN}✓ D-Bus Python bindings found${NC}"
+
 # Get installation directory
 INSTALL_DIR="$HOME/.local/share/physica-app"
 BIN_DIR="$HOME/.local/bin"

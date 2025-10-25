@@ -1,8 +1,6 @@
-# GTK4 and libadwaita Python bindings
-PyGObject>=3.42.0
-
-# D-Bus integration
-dbus-python>=1.2.18
+# System packages required (install via package manager):
+# - python3-gi (or python-gobject on Arch)
+# - python3-dbus (or python-dbus on Arch)
 
 # Date/time handling
 python-dateutil>=2.8.2

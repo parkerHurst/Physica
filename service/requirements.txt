@@ -1,5 +1,8 @@
-dbus-python>=1.3.2
-PyGObject>=3.42.0
+# System packages required (install via package manager):
+# - python3-dbus (or python-dbus on Arch)
+# - python3-gi (or python-gobject on Arch)
+# - python3-pyudev (or python-pyudev on Arch)
+
 pyudev>=0.24.0
 psutil>=5.9.0
 toml>=0.10.2

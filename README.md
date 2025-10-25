@@ -62,12 +62,30 @@ physica
 ```
 
 The installer will:
-- ✅ Check dependencies (Python 3.11+, GTK4)
+- ✅ Check dependencies (Python 3.11+, GTK4, D-Bus)
 - ✅ Create isolated virtual environment
 - ✅ Install Python packages (no system conflicts!)
 - ✅ Create launchers in `~/.local/bin`
 - ✅ Add desktop entry
 - ✅ Configure autostart for the service
+
+### Prerequisites
+
+**Debian/Ubuntu users** - Install system dependencies first:
+```bash
+sudo apt update
+sudo apt install python3-dev python3-gi python3-dbus libgtk-4-1 libadwaita-1-0
+```
+
+**Arch/Manjaro users**:
+```bash
+sudo pacman -S python-gobject python-dbus gtk4 libadwaita
+```
+
+**Fedora users**:
+```bash
+sudo dnf install python3-gobject python3-dbus gtk4 libadwaita
+```
 
 ### Option B: Manual Development Setup
 
@@ -304,6 +322,51 @@ python3 -c "from physica_gtk.dbus_client import PhysicaDBusClient; print(Physica
 # Test game card rendering
 python3 -c "from physica_gtk.game_card import GameCard; print('OK')"
 ```
+
+## 🔧 Troubleshooting
+
+### Installation Issues
+
+**`metadata-generation-failed` error on Debian/Ubuntu:**
+```bash
+# Install build dependencies
+sudo apt install python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential
+
+# Or use system packages instead
+sudo apt install python3-dbus python3-gi
+```
+
+**`externally-managed-environment` error:**
+The installer now uses a virtual environment to avoid this issue. If you still get this error, run:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+**GTK4 not found:**
+```bash
+# Debian/Ubuntu
+sudo apt install libgtk-4-1 libadwaita-1-0 python3-gi
+
+# Arch/Manjaro
+sudo pacman -S gtk4 libadwaita python-gobject
+
+# Fedora
+sudo dnf install gtk4 libadwaita python3-gobject
+```
+
+### Runtime Issues
+
+**Service won't start:**
+- Check if another instance is running: `ps aux | grep physica`
+- Kill existing instances: `pkill -f "python.*main.py"`
+- Check D-Bus permissions: `systemctl --user status dbus`
+
+**Games won't launch:**
+- Check Wine/Proton installation
+- Verify game executable path in cartridge metadata
+- Check Wine prefix permissions
 
 ### Contributing
 

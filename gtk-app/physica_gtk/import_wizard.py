@@ -397,13 +397,6 @@ class ImportWizardDialog(Adw.Window):
         warning_box.set_margin_start(24)
         warning_box.set_margin_end(24)
         
-        warning_icon = Gtk.Image.new_from_icon_name("dialog-warning-symbolic")
-        warning_icon.set_pixel_size(48)
-        warning_icon.add_css_class("warning")
-        warning_icon.set_margin_start(12)
-        warning_icon.set_margin_end(12)
-        warning_box.append(warning_icon)
-        
         warning_label = Gtk.Label()
         warning_label.set_markup("<b>⚠️ WARNING: All data on the USB drive will be erased!</b>")
         warning_label.add_css_class("title-3")

@@ -74,21 +74,21 @@ The installer will:
 **Debian/Ubuntu users** - Install system dependencies first:
 ```bash
 sudo apt update
-sudo apt install python3-dev python3-gi python3-dbus libgtk-4-1 libadwaita-1-0
+sudo apt install python3-dev python3-gi python3-dbus python3-cairo python3-pyudev libgtk-4-1 libadwaita-1-0 e2fsprogs udisks2
 
-# The installer will automatically install additional build dependencies if needed
+# The installer will automatically install additional dependencies if needed
 # If you get build errors, manually install:
 sudo apt install python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake libcairo2-dev libgirepository1.0-dev libcairo-gobject2-dev libffi-dev
 ```
 
 **Arch/Manjaro users**:
 ```bash
-sudo pacman -S python-gobject python-dbus gtk4 libadwaita
+sudo pacman -S python-gobject python-dbus python-cairo python-pyudev gtk4 libadwaita e2fsprogs udisks2
 ```
 
 **Fedora users**:
 ```bash
-sudo dnf install python3-gobject python3-dbus gtk4 libadwaita
+sudo dnf install python3-gobject python3-dbus python3-cairo python3-pyudev gtk4 libadwaita e2fsprogs udisks2
 ```
 
 ### Option B: Manual Development Setup

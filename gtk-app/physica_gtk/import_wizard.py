@@ -390,19 +390,26 @@ class ImportWizardDialog(Adw.Window):
         page_box.append(title)
         
         # Warning
-        warning_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        warning_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
         warning_box.add_css_class("card")
         warning_box.set_margin_top(12)
         warning_box.set_margin_bottom(12)
+        warning_box.set_margin_start(24)
+        warning_box.set_margin_end(24)
         
         warning_icon = Gtk.Image.new_from_icon_name("dialog-warning-symbolic")
         warning_icon.set_pixel_size(48)
         warning_icon.add_css_class("warning")
+        warning_icon.set_margin_start(12)
+        warning_icon.set_margin_end(12)
         warning_box.append(warning_icon)
         
         warning_label = Gtk.Label()
         warning_label.set_markup("<b>⚠️ WARNING: All data on the USB drive will be erased!</b>")
         warning_label.add_css_class("title-3")
+        warning_label.set_margin_start(12)
+        warning_label.set_margin_end(12)
+        warning_label.set_hexpand(True)
         warning_box.append(warning_label)
         
         page_box.append(warning_box)
@@ -439,6 +446,8 @@ class ImportWizardDialog(Adw.Window):
         prepare_button.add_css_class("pill")
         prepare_button.add_css_class("destructive-action")
         prepare_button.set_size_request(200, -1)
+        prepare_button.set_hexpand(False)  # Don't expand horizontally
+        prepare_button.set_halign(Gtk.Align.CENTER)  # Center the button
         prepare_button.connect("clicked", self._on_prepare_usb_clicked)
         page_box.append(prepare_button)
         
@@ -486,7 +495,7 @@ class ImportWizardDialog(Adw.Window):
             mkfs_cmd = None
             
             for path in mkfs_paths:
-                if os.path.exists(path) or path == 'mkfs.ext4':
+                if path == 'mkfs.ext4' or os.path.exists(path):
                     mkfs_cmd = path
                     break
             

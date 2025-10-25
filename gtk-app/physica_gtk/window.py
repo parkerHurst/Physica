@@ -88,11 +88,21 @@ class PhysicaWindow(Adw.ApplicationWindow):
         self.empty_state.set_title("No Games Yet")
         self.empty_state.set_description("Import your first game cartridge to get started")
         
+        # Create a container to control button size
+        button_container = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        button_container.set_halign(Gtk.Align.CENTER)
+        button_container.set_hexpand(False)
+        
         empty_button = Gtk.Button(label="Import Game")
         empty_button.add_css_class("pill")
         empty_button.add_css_class("suggested-action")
+        empty_button.add_css_class("import-game-button")  # Add CSS class for size constraint
+        empty_button.set_size_request(200, -1)  # Set fixed width
+        empty_button.set_hexpand(False)  # Don't expand horizontally
         empty_button.connect("clicked", self._on_import_clicked)
-        self.empty_state.set_child(empty_button)
+        
+        button_container.append(empty_button)
+        self.empty_state.set_child(button_container)
         
         # Stack to switch between grid and empty state
         self.stack = Gtk.Stack()

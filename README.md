@@ -4,8 +4,6 @@
 
 Physica brings the nostalgic experience of physical game cartridges to modern PC gaming. Each cartridge is a self-contained, portable package with the game, saves, and Wine prefix—plug it in, play your game, unplug it, and take it anywhere.
 
-Perfect for Steam Deck users who want a physical game collection!
-
 ---
 
 ## ✨ Features

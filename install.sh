@@ -100,20 +100,20 @@ echo -e "${GREEN}✓ Virtual environment created${NC}"
 echo ""
 echo -e "${YELLOW}➜ Installing Python dependencies...${NC}"
 
-# Check if we need to install build dependencies
-if ! python3 -c "import dbus" 2>/dev/null || ! python3 -c "import gi" 2>/dev/null; then
-    echo -e "${YELLOW}  Installing build dependencies for dbus-python and PyGObject...${NC}"
+# Check if we need to install system packages
+if ! python3 -c "import dbus" 2>/dev/null || ! python3 -c "import gi" 2>/dev/null || ! python3 -c "import cairo" 2>/dev/null; then
+    echo -e "${YELLOW}  Installing required system packages...${NC}"
     
-    # Detect package manager and install build dependencies
+    # Detect package manager and install system packages
     if command -v apt &> /dev/null; then
-        echo "  Installing build dependencies via apt..."
-        sudo apt install -y python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake libcairo2-dev libgirepository1.0-dev libcairo-gobject2-dev libffi-dev
+        echo "  Installing system packages via apt..."
+        sudo apt install -y python3-dbus python3-gi python3-cairo python3-pyudev
     elif command -v pacman &> /dev/null; then
-        echo "  Installing build dependencies via pacman..."
-        sudo pacman -S --noconfirm python-dbus python-gobject
+        echo "  Installing system packages via pacman..."
+        sudo pacman -S --noconfirm python-dbus python-gobject python-cairo python-pyudev
     elif command -v dnf &> /dev/null; then
-        echo "  Installing build dependencies via dnf..."
-        sudo dnf install -y python3-devel python3-dbus python3-gobject
+        echo "  Installing system packages via dnf..."
+        sudo dnf install -y python3-dbus python3-gobject python3-cairo python3-pyudev
     fi
 fi
 

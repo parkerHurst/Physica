@@ -107,7 +107,7 @@ if ! python3 -c "import dbus" 2>/dev/null || ! python3 -c "import gi" 2>/dev/nul
     # Detect package manager and install build dependencies
     if command -v apt &> /dev/null; then
         echo "  Installing build dependencies via apt..."
-        sudo apt install -y python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake libcairo2-dev libgirepository1.0-dev
+        sudo apt install -y python3-dev python3-dbus-dev libdbus-1-dev libdbus-glib-1-dev build-essential pkg-config cmake libcairo2-dev libgirepository1.0-dev libcairo-gobject2-dev libffi-dev
     elif command -v pacman &> /dev/null; then
         echo "  Installing build dependencies via pacman..."
         sudo pacman -S --noconfirm python-dbus python-gobject

@@ -22,6 +22,10 @@ if [ -d "$BUILD_DIR" ]; then
     rm -rf "$BUILD_DIR"
 fi
 
+# Detect system Python version
+SYSTEM_PYTHON_VERSION=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+echo "System Python version: ${SYSTEM_PYTHON_VERSION}"
+
 # Create AppDir structure
 echo "Creating AppDir structure..."
 mkdir -p "${APP_DIR}/usr/bin"
@@ -30,7 +34,7 @@ mkdir -p "${APP_DIR}/usr/lib/girepository-1.0"
 mkdir -p "${APP_DIR}/usr/share/applications"
 mkdir -p "${APP_DIR}/usr/share/icons/hicolor/scalable/apps"
 mkdir -p "${APP_DIR}/usr/share/physica"
-mkdir -p "${APP_DIR}/usr/lib/python3.13/site-packages"
+mkdir -p "${APP_DIR}/usr/lib/python${SYSTEM_PYTHON_VERSION}/site-packages"
 
 # Copy application files
 echo "Copying application files..."
@@ -91,13 +95,16 @@ if [ -z "$PYTHON" ]; then
     exit 1
 fi
 
+# Detect system Python version
+PYTHON_VERSION=$("${PYTHON}" -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+
 # Set environment variables
 export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 export PHYSICA_INSTALL_DIR="${HERE}/usr/share/physica"
 
 # Add AppDir Python modules to path
-export PYTHONPATH="${HERE}/usr/lib/python3.13/site-packages:${HERE}/usr/share/physica:${PYTHONPATH}"
+export PYTHONPATH="${HERE}/usr/lib/python${PYTHON_VERSION}/site-packages:${HERE}/usr/share/physica:${PYTHONPATH}"
 
 # Set GI typelib path for GObject introspection
 export GI_TYPELIB_PATH="${HERE}/usr/lib/girepository-1.0"
@@ -133,7 +140,7 @@ echo "Found site-packages at: $VENV_SITE_PKGS"
 if [ -n "$VENV_SITE_PKGS" ] && [ -d "$VENV_SITE_PKGS" ]; then
     # Copy all packages from venv site-packages  
     # We're in ${APP_DIR}/usr, so go up one level for the copy target
-    TARGET_DIR="../usr/lib/python3.13/site-packages"
+    TARGET_DIR="../usr/lib/python${SYSTEM_PYTHON_VERSION}/site-packages"
     mkdir -p "$TARGET_DIR"
     echo "Copying from $VENV_SITE_PKGS/* to $TARGET_DIR/"
     # Copy without verbose to avoid massive output

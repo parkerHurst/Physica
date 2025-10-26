@@ -110,6 +110,10 @@ chmod +x "${APP_DIR}/AppRun"
 
 # Bundle Python dependencies
 echo "Bundling Python dependencies..."
+
+# Store the current directory
+SCRIPT_DIR="$(pwd)"
+
 cd "${APP_DIR}/usr"
 
 # Create a temporary virtual environment to bundle dependencies
@@ -121,12 +125,21 @@ pip install dbus-python PyGObject pycairo pyudev psutil toml --quiet
 
 # Copy required Python modules to AppDir
 echo "Copying Python packages..."
-SITE_PACKAGES=$(python3 -c "import site; print(site.getsitepackages()[0])")
-cp -r "${SITE_PACKAGES}"/* "${APP_DIR}/usr/lib/python3.13/site-packages/" 2>/dev/null || true
+# Find the venv's site-packages directory
+VENV_SITE_PKGS=$(find temp_venv/lib/python3* -name "site-packages" -type d | head -1)
 
-# Also copy from the venv
-find temp_venv/lib/python3.*/site-packages -type f -name "*.so*" -exec cp --parents {} "${APP_DIR}/usr/" \; 2>/dev/null || true
-find temp_venv/lib/python3.*/site-packages -type d -name "__pycache__" -exec cp -r {} "${APP_DIR}/usr/lib/python3.13/site-packages/" \; 2>/dev/null || true
+echo "Found site-packages at: $VENV_SITE_PKGS"
+
+if [ -n "$VENV_SITE_PKGS" ] && [ -d "$VENV_SITE_PKGS" ]; then
+    # Copy all packages from venv site-packages  
+    # We're in ${APP_DIR}/usr, so go up one level for the copy target
+    TARGET_DIR="../usr/lib/python3.13/site-packages"
+    mkdir -p "$TARGET_DIR"
+    echo "Copying from $VENV_SITE_PKGS/* to $TARGET_DIR/"
+    # Copy without verbose to avoid massive output
+    cp -r "${VENV_SITE_PKGS}/"* "$TARGET_DIR/" 2>/dev/null
+    echo "Verify: $(ls "$TARGET_DIR" | wc -l) items in target"
+fi
 
 # Copy shared libraries needed by Python modules
 ldconfig -p 2>/dev/null | grep -E "libdbus-1|libgirepository|libcairo|libgobject|libglib" | awk '{print $NF}' | xargs -I {} sh -c 'cp {} "$1"/usr/lib/ 2>/dev/null || true' -- 

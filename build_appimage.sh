@@ -103,8 +103,9 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 export PHYSICA_INSTALL_DIR="${HERE}/usr/share/physica"
 
-# Add AppDir Python modules to path
-export PYTHONPATH="${HERE}/usr/lib/python${PYTHON_VERSION}/site-packages:${HERE}/usr/share/physica:${PYTHONPATH}"
+# Add AppDir Python modules to path - check multiple version directories
+# Try the detected version first, then common alternatives
+export PYTHONPATH="${HERE}/usr/lib/python${PYTHON_VERSION}/site-packages:${HERE}/usr/lib/python3.13/site-packages:${HERE}/usr/lib/python3.11/site-packages:${HERE}/usr/lib/python3.10/site-packages:${HERE}/usr/share/physica:${PYTHONPATH}"
 
 # Set GI typelib path for GObject introspection
 export GI_TYPELIB_PATH="${HERE}/usr/lib/girepository-1.0"
@@ -154,10 +155,19 @@ ldconfig -p 2>/dev/null | grep -E "libdbus-1|libgirepository|libcairo|libgobject
 
 # Copy .so files from the venv site-packages (like _gi.cpython-xxx.so)
 echo "Copying .so files..."
-find temp_venv/lib/python3* -name "*.so" -exec cp {} "${APP_DIR}/usr/lib/python3.13/site-packages/" \; 2>/dev/null || true
+find temp_venv/lib/python3* -name "*.so" -exec cp {} "${APP_DIR}/usr/lib/python${SYSTEM_PYTHON_VERSION}/site-packages/" \; 2>/dev/null || true
 
 deactivate
 cd - > /dev/null
+
+# Create symlinks for common Python versions to support multiple target systems
+echo "Creating Python version symlinks..."
+for VERSION in "3.10" "3.11" "3.12"; do
+    if [ "$VERSION" != "$SYSTEM_PYTHON_VERSION" ]; then
+        mkdir -p "${APP_DIR}/usr/lib/python${VERSION}"
+        ln -sf "../python${SYSTEM_PYTHON_VERSION}/site-packages" "${APP_DIR}/usr/lib/python${VERSION}/site-packages"
+    fi
+done
 
 # Copy GI typelibs for GTK4 and libadwaita
 echo "Copying GI typelibs..."

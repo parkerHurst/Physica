@@ -12,7 +12,7 @@ APP_DIR="${BUILD_DIR}/AppDir"
 
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║          Building Physica AppImage for Steam Deck          ║"
-echo "║                      Version ${VERSION}                       ║"
+echo "║                      Version ${VERSION}                         ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -61,6 +61,14 @@ Keywords=games;cartridge;usb;steam;
 Comment=Physical game cartridge manager
 MimeType=
 EOF
+
+# Create symlink to desktop file in AppDir root (required by appimagetool)
+# Use relative path for proper symlink
+cd "${APP_DIR}"
+ln -sf "usr/share/applications/physica.desktop" "Physica.desktop"
+# Copy icon to AppDir root for appimagetool
+cp usr/share/icons/hicolor/scalable/apps/physica.svg physica.svg
+cd - > /dev/null
 
 # Create AppRun script
 cat > "${APP_DIR}/AppRun" <<'EOFAPP'
@@ -138,10 +146,20 @@ fi
 
 # Build the AppImage
 echo "Building AppImage..."
-./appimagetool-x86_64.AppImage "${APP_DIR}" "${BUILD_DIR}/${APPIMAGE_NAME}" || true
+./appimagetool-x86_64.AppImage \
+    "${APP_DIR}" \
+    "${APPIMAGE_NAME}" \
+    2>&1 | grep -v "^WARNING:" || true
+
+# Move AppImage to build directory
+if [ -f "${APPIMAGE_NAME}" ]; then
+    mv "${APPIMAGE_NAME}" "${BUILD_DIR}/"
+fi
 
 # Make it executable
-chmod +x "${BUILD_DIR}/${APPIMAGE_NAME}"
+if [ -f "${BUILD_DIR}/${APPIMAGE_NAME}" ]; then
+    chmod +x "${BUILD_DIR}/${APPIMAGE_NAME}"
+fi
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════╗"

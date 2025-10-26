@@ -66,6 +66,13 @@ All notable changes to Physica will be documented in this file.
 
 ---
 
+## [1.1.2] - 2025-10-26
+
+### Bug Fixes
+- 🔧 **Fixed AppImage build script** - Added proper symlink to desktop file and icon in AppDir root to fix appimagetool errors
+
+---
+
 ## [1.1.1] - 2025-10-26
 
 ### New Features
@@ -96,6 +103,9 @@ All notable changes to Physica will be documented in this file.
 ---
 
 ## Version History
+
+### v1.1.2 (2025-10-26)
+**Fix:** Fixed AppImage build script - added proper symlink and icon in AppDir root
 
 ### v1.1.1 (2025-10-26)
 **Fix:** pkexec permission issues on Debian - added proper environment variables and --disable-internal-agent flag

@@ -8,7 +8,7 @@ set -e  # Exit on error
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║            Physica Installation Script v1.1.1              ║"
+echo "║            Physica Installation Script v1.1.2              ║"
 echo "║         Physical Game Cartridge Manager for Linux          ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""

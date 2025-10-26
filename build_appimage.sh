@@ -4,7 +4,7 @@
 
 set -e
 
-VERSION="1.1.1"
+VERSION="1.1.2"
 APP_NAME="Physica"
 APPIMAGE_NAME="${APP_NAME}-${VERSION}-STEAMDECK.AppImage"
 BUILD_DIR="build_appimage"

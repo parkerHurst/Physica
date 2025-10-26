@@ -1,11 +1,11 @@
-# Maintainer: Parker Hurst <parker at example dot com>
+# Maintainer: Parker Hurst <me@phurst.org>
 
 pkgname=physica
 pkgver=1.0
 pkgrel=1
 pkgdesc="Physical game cartridge manager for PC games - turn USB drives into plug-and-play game cartridges"
 arch=('any')
-url="https://github.com/parkerHurst/Physica"
+url="https://physica-app.org"
 license=('MIT')
 depends=(
     'python>=3.11'

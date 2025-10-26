@@ -63,7 +63,7 @@ fi
 echo -e "${GREEN}✓ D-Bus Python bindings found${NC}"
 
 # Get installation directory
-INSTALL_DIR="$HOME/.local/share/physica-app"
+INSTALL_DIR="$HOME/.local/share/physica"
 BIN_DIR="$HOME/.local/bin"
 
 echo ""
@@ -142,8 +142,8 @@ echo -e "${YELLOW}➜ Creating launcher scripts...${NC}"
 # Service launcher
 cat > "$BIN_DIR/physica-service" << 'EOF'
 #!/bin/bash
-VENV="$HOME/.local/share/physica-app/venv"
-cd "$HOME/.local/share/physica-app/service"
+VENV="$HOME/.local/share/physica/venv"
+cd "$HOME/.local/share/physica/service"
 exec "$VENV/bin/python" -u main.py "$@"
 EOF
 chmod +x "$BIN_DIR/physica-service"
@@ -151,8 +151,8 @@ chmod +x "$BIN_DIR/physica-service"
 # GUI launcher
 cat > "$BIN_DIR/physica" << 'EOF'
 #!/bin/bash
-VENV="$HOME/.local/share/physica-app/venv"
-cd "$HOME/.local/share/physica-app/gtk-app"
+VENV="$HOME/.local/share/physica/venv"
+cd "$HOME/.local/share/physica/gtk-app"
 exec "$VENV/bin/python" run.py "$@"
 EOF
 chmod +x "$BIN_DIR/physica"
@@ -250,6 +250,7 @@ echo "3. Or find 'Physica' in your application menu"
 echo ""
 echo "4. Create your first cartridge with the Import Wizard!"
 echo ""
+echo "🌐 Website: https://physica-app.org"
 echo "📚 Documentation: $INSTALL_DIR/README.md"
 echo "🐛 Issues: https://github.com/parkerHurst/Physica/issues"
 echo ""

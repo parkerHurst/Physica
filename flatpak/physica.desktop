@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Physica
+Comment=Physical Game Cartridge Manager for Linux
+Exec=physica
+Icon=io.github.physica.app
+Terminal=false
+Categories=Game;Utility;
+StartupNotify=true
+MimeType=application/x-physica-cartridge;
+URL=https://physica-app.org

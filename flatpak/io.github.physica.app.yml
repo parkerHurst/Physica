@@ -1,0 +1,99 @@
+app-id: io.github.physica.app
+runtime: org.gnome.Platform
+runtime-version: '45'
+sdk: org.gnome.Sdk
+command: physica
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=x11
+  - --socket=session-bus
+  - --socket=system-bus
+  - --device=dri
+  - --device=all
+  - --filesystem=home
+  - --filesystem=host
+  - --filesystem=/media:ro
+  - --filesystem=/run/media:ro
+  - --filesystem=/mnt:ro
+  - --talk-name=org.freedesktop.UDisks2
+  - --talk-name=org.freedesktop.DBus
+  - --talk-name=org.freedesktop.systemd1
+  - --own-name=com.physica.Service
+  - --own-name=com.physica.App
+
+modules:
+  - name: physica-service
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 service/physica_service.py $FLATPAK_DEST/bin/physica-service
+      - install -Dm755 service/dbus_service.py $FLATPAK_DEST/lib/python3.13/site-packages/dbus_service.py
+      - install -Dm755 service/cartridge.py $FLATPAK_DEST/lib/python3.13/site-packages/cartridge.py
+      - install -Dm755 service/cartridge_registry.py $FLATPAK_DEST/lib/python3.13/site-packages/cartridge_registry.py
+      - install -Dm755 service/config.py $FLATPAK_DEST/lib/python3.13/site-packages/config.py
+      - install -Dm755 service/game_launcher.py $FLATPAK_DEST/lib/python3.13/site-packages/game_launcher.py
+      - install -Dm755 service/save_sync.py $FLATPAK_DEST/lib/python3.13/site-packages/save_sync.py
+      - install -Dm755 service/playtime_tracker.py $FLATPAK_DEST/lib/python3.13/site-packages/playtime_tracker.py
+      - install -Dm755 service/usb_scanner.py $FLATPAK_DEST/lib/python3.13/site-packages/usb_scanner.py
+      - install -Dm755 service/requirements.txt $FLATPAK_DEST/lib/python3.13/site-packages/requirements.txt
+    sources:
+      - type: dir
+        path: ../service
+
+  - name: physica-gtk-app
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 gtk-app/run.py $FLATPAK_DEST/bin/physica
+      - install -Dm755 gtk-app/physica_gtk/__init__.py $FLATPAK_DEST/lib/python3.13/site-packages/physica_gtk/__init__.py
+      - install -Dm755 gtk-app/physica_gtk/window.py $FLATPAK_DEST/lib/python3.13/site-packages/physica_gtk/window.py
+      - install -Dm755 gtk-app/physica_gtk/game_card.py $FLATPAK_DEST/lib/python3.13/site-packages/physica_gtk/game_card.py
+      - install -Dm755 gtk-app/physica_gtk/import_wizard.py $FLATPAK_DEST/lib/python3.13/site-packages/physica_gtk/import_wizard.py
+      - install -Dm755 gtk-app/physica_gtk/dbus_client.py $FLATPAK_DEST/lib/python3.13/site-packages/physica_gtk/dbus_client.py
+      - install -Dm755 gtk-app/physica_gtk/style.css $FLATPAK_DEST/share/physica/gtk-app/physica_gtk/style.css
+      - install -Dm755 gtk-app/requirements.txt $FLATPAK_DEST/lib/python3.13/site-packages/requirements.txt
+    sources:
+      - type: dir
+        path: ../gtk-app
+
+  - name: python-toml
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=$FLATPAK_DEST toml>=0.10.2
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/source/t/toml/toml-0.10.2.tar.gz
+        sha256: b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe6f
+
+  - name: python-psutil
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=$FLATPAK_DEST psutil>=5.9.0
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.0.tar.gz
+        sha256: 5410658f4bacf15e1cd2b7f5bf9fcd0d52f7261b8c4beb60f57726bb06d35e6
+
+  - name: python-pyudev
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=$FLATPAK_DEST pyudev>=0.24.0
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/source/p/pyudev/pyudev-0.24.3.tar.gz
+        sha256: 72ddc0b8bc4a3cbd3eea3d43e5c1659f66a4b5f83c326c4b0d1f0b8428ff56d
+
+  - name: physica-desktop-file
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 physica.desktop $FLATPAK_DEST/share/applications/io.github.physica.app.desktop
+    sources:
+      - type: file
+        path: physica.desktop
+
+  - name: physica-icon
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 physica.svg $FLATPAK_DEST/share/icons/hicolor/scalable/apps/io.github.physica.app.svg
+    sources:
+      - type: file
+        path: physica.svg

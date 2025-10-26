@@ -73,12 +73,6 @@ button.pill {
     font-weight: 600;
 }
 
-/* Import button size constraint */
-button.import-game-button {
-    min-width: 200px;
-    max-width: 200px;
-}
-
 /* ========== Utility Classes ========== */
 
 .dim-label {

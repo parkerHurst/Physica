@@ -38,7 +38,7 @@ echo -e "${GREEN}✓ Service stopped${NC}"
 echo -e "${YELLOW}➜ Removing files...${NC}"
 
 # Remove installation directory
-rm -rf "$HOME/.local/share/physica-app"
+rm -rf "$HOME/.local/share/physica"
 echo "  ✓ App files removed"
 
 # Remove launchers

@@ -44,7 +44,21 @@ Physica brings the nostalgic experience of physical game cartridges to modern PC
 
 ## 🚀 Quick Start
 
-### Option A: Automated Installation (Recommended)
+### Option A: Flatpak Installation (Recommended)
+
+```bash
+# 1. Clone or download
+git clone https://github.com/parkerHurst/Physica.git
+cd Physica
+
+# 2. Build and install Flatpak
+./build_flatpak.sh
+
+# 3. Run Physica
+flatpak run io.github.physica.app
+```
+
+### Option B: Manual Installation
 
 ```bash
 # 1. Clone or download
@@ -417,6 +431,7 @@ MIT
 
 ## 💬 Support
 
+- **Website:** [physica-app.org](https://physica-app.org)
 - **Issues:** [GitHub Issues](https://github.com/parkerHurst/Physica/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/parkerHurst/Physica/discussions)
 

@@ -4,12 +4,12 @@
 
 set -e
 
-VERSION="1.0-EA"
+VERSION="1.0.2"
 PACKAGE_NAME="physica-$VERSION"
 BUILD_DIR="build/$PACKAGE_NAME"
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║          Physica Packaging Script v$VERSION                ║"
+echo "║             Physica Packaging Script v$VERSION                ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -57,7 +57,7 @@ SIZE=$(du -h "build/$PACKAGE_NAME.tar.gz" | cut -f1)
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║              ✅ Package Created Successfully!               ║"
+echo "║              ✅ Package Created Successfully!              ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 echo "📦 Package: build/$PACKAGE_NAME.tar.gz"

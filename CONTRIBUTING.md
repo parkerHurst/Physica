@@ -235,6 +235,7 @@ Every contribution helps make Physica better for the community. Whether it's:
 
 ## ❓ Questions?
 
+- Visit our [website](https://physica-app.org)
 - Open a [GitHub Discussion](https://github.com/parkerHurst/Physica/discussions)
 - Check existing [Issues](https://github.com/parkerHurst/Physica/issues)
 - Read the [README](README.md)

@@ -26,6 +26,7 @@ fi
 echo "Creating AppDir structure..."
 mkdir -p "${APP_DIR}/usr/bin"
 mkdir -p "${APP_DIR}/usr/lib"
+mkdir -p "${APP_DIR}/usr/lib/girepository-1.0"
 mkdir -p "${APP_DIR}/usr/share/applications"
 mkdir -p "${APP_DIR}/usr/share/icons/hicolor/scalable/apps"
 mkdir -p "${APP_DIR}/usr/share/physica"
@@ -133,8 +134,25 @@ ldconfig -p 2>/dev/null | grep -E "libdbus-1|libgirepository|libcairo|libgobject
 deactivate
 cd - > /dev/null
 
-echo "⚠️  Note: GTK4 and libadwaita must be available on the host system"
-echo "For best compatibility, ensure GTK4 is installed on the target system"
+# Copy GI typelibs for GTK4 and libadwaita
+echo "Copying GI typelibs..."
+if [ -d "/usr/share/gir-1.0" ]; then
+    # Find required gir files and copy them
+    GIR_DIRS=("/usr/share/gir-1.0" "/usr/lib/girepository-1.0")
+    for dir in "${GIR_DIRS[@]}"; do
+        if [ -d "$dir" ]; then
+            # Copy GTK4, Adw, Gio, Gdk related files
+            find "$dir" -name "Gtk-4.0.typelib" -exec cp {} "${APP_DIR}/usr/lib/girepository-1.0/" \; 2>/dev/null || true
+            find "$dir" -name "Adw-1.typelib" -exec cp {} "${APP_DIR}/usr/lib/girepository-1.0/" \; 2>/dev/null || true
+            find "$dir" -name "Gio-2.0.typelib" -exec cp {} "${APP_DIR}/usr/lib/girepository-1.0/" \; 2>/dev/null || true
+            find "$dir" -name "Gdk-4.0.typelib" -exec cp {} "${APP_DIR}/usr/lib/girepository-1.0/" \; 2>/dev/null || true
+            find "$dir" -name "GLib-2.0.typelib" -exec cp {} "${APP_DIR}/usr/lib/girepository-1.0/" \; 2>/dev/null || true
+        fi
+    done
+fi
+
+echo "⚠️  Note: This AppImage now includes GTK4 typelibs but still requires GTK4 libraries on the host system"
+echo "For Steam Deck: GTK4 is typically available in Desktop Mode"
 
 # Download appimagetool if not present
 if [ ! -f "appimagetool-x86_64.AppImage" ]; then

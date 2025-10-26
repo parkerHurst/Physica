@@ -29,6 +29,8 @@ Physica brings the nostalgic experience of physical game cartridges to modern PC
 
 ## 🚀 Quick Start
 
+### Option A: Install Script (Recommended for Desktop Linux)
+
 ```bash
 # 1. Clone or download
 git clone https://github.com/parkerHurst/Physica.git
@@ -51,6 +53,22 @@ The installer will:
 - ✅ Create launchers in `~/.local/bin`
 - ✅ Add desktop entry
 - ✅ Configure autostart for the service
+
+### Option B: AppImage (Recommended for Steam Deck)
+
+**Download the latest AppImage:**
+```bash
+# Download from GitHub releases
+wget https://github.com/parkerHurst/Physica/releases/download/v1.1.1/Physica-1.1.1-STEAMDECK.AppImage
+
+# Make executable
+chmod +x Physica-1.1.1-STEAMDECK.AppImage
+
+# Run
+./Physica-1.1.1-STEAMDECK.AppImage
+```
+
+**Note:** The AppImage requires GTK4 on the host system. On Steam Deck Desktop Mode, GTK4 is typically pre-installed.
 
 ### Prerequisites
 

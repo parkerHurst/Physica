@@ -68,6 +68,9 @@ All notable changes to Physica will be documented in this file.
 
 ## [1.1.1] - 2025-10-26
 
+### New Features
+- 📦 **Added AppImage build for Steam Deck** - New `build_appimage.sh` script creates self-contained AppImage with bundled Python dependencies for easy Steam Deck installation
+
 ### Bug Fixes
 - 🔧 **Fixed pkexec permission issues on Debian** - Added `--disable-internal-agent` flag and proper environment variables for GUI password prompts when formatting USB drives
 

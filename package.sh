@@ -4,7 +4,7 @@
 
 set -e
 
-VERSION="1.1"
+VERSION="1.1.1"
 PACKAGE_NAME="physica-$VERSION"
 BUILD_DIR="build/$PACKAGE_NAME"
 

@@ -158,7 +158,7 @@ class GameImporter:
             "game": {
                 "name": game_name,
                 "id": game_id,
-                "version": "1.1",
+                "version": "1.1.1",
                 "publisher": "",
                 "release_date": "",
                 "executable": exe_path,

@@ -506,11 +506,19 @@ class ImportWizardDialog(Adw.Window):
                 raise Exception("mkfs.ext4 not found in system")
             
             try:
+                # Try pkexec with proper environment for password prompt
+                import os
+                env = os.environ.copy()
+                # Ensure DISPLAY is set for GUI password prompt
+                if 'DISPLAY' not in env and 'WAYLAND_DISPLAY' not in env:
+                    env['DISPLAY'] = ':0'
+                
                 format_result = subprocess.run(
-                    ['pkexec', mkfs_cmd, '-F', '-L', safe_label, self.usb_device],
+                    ['pkexec', '--disable-internal-agent', mkfs_cmd, '-F', '-L', safe_label, self.usb_device],
                     capture_output=True,
                     text=True,
-                    timeout=60
+                    timeout=60,
+                    env=env
                 )
                 
                 if format_result.returncode != 0:
@@ -559,10 +567,16 @@ class ImportWizardDialog(Adw.Window):
             
             # Use pkexec to change ownership
             try:
+                env = os.environ.copy()
+                # Ensure DISPLAY is set for GUI password prompt
+                if 'DISPLAY' not in env and 'WAYLAND_DISPLAY' not in env:
+                    env['DISPLAY'] = ':0'
+                
                 chown_result = subprocess.run(
-                    ['pkexec', 'chown', '-R', f'{username}:{username}', str(self.usb_mount_point)],
+                    ['pkexec', '--disable-internal-agent', 'chown', '-R', f'{username}:{username}', str(self.usb_mount_point)],
                     capture_output=True,
-                    text=True
+                    text=True,
+                    env=env
                 )
                 
                 if chown_result.returncode != 0:

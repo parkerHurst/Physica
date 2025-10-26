@@ -66,6 +66,13 @@ All notable changes to Physica will be documented in this file.
 
 ---
 
+## [1.1.1] - 2025-10-26
+
+### Bug Fixes
+- 🔧 **Fixed pkexec permission issues on Debian** - Added `--disable-internal-agent` flag and proper environment variables for GUI password prompts when formatting USB drives
+
+---
+
 ## [1.1.0] - 2025-10-26
 
 ### New Features
@@ -86,6 +93,9 @@ All notable changes to Physica will be documented in this file.
 ---
 
 ## Version History
+
+### v1.1.1 (2025-10-26)
+**Fix:** pkexec permission issues on Debian - added proper environment variables and --disable-internal-agent flag
 
 ### v1.1.0 (2025-10-26)
 **New:** Added custom icon, removed Flatpak support

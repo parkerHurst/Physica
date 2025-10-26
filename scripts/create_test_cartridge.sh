@@ -31,7 +31,7 @@ cat > "$MOUNT_PATH/.gamecard/metadata.toml" <<EOF
 [game]
 name = "$GAME_NAME"
 id = "${GAME_ID}_test"
-version = "1.0.0"
+version = "1.1.0"
 publisher = "Test Publisher"
 release_date = "2024-01-01"
 executable = "game/game.exe"

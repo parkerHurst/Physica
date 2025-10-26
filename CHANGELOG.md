@@ -66,7 +66,29 @@ All notable changes to Physica will be documented in this file.
 
 ---
 
+## [1.1.0] - 2025-10-26
+
+### New Features
+- 🎨 **Added Physica logo/icon** - Custom SVG icon integrated throughout the application
+- 📦 **Improved packaging** - Icon included in all distribution methods
+
+### Improvements
+- 🔧 **Removed Flatpak support** - Simplified distribution as Flatpak sandboxing incompatible with system-level USB operations
+- 🧹 **Code cleanup** - Removed deprecated Flatpak-specific code from import wizard
+- 📝 **Updated all version references** - Bumped to v1.1 across all files
+
+### Technical Changes
+- Updated installation scripts to include icon
+- Updated PKGBUILD to install icon
+- Updated uninstaller to remove icon
+- Updated package.sh to include icon in distribution
+
+---
+
 ## Version History
+
+### v1.1.0 (2025-10-26)
+**New:** Added custom icon, removed Flatpak support
 
 ### v1.0.1 (2025-10-25)
 **Fix:** Debian/Ubuntu installation issues - proper build dependencies and system package usage

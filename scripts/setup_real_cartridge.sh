@@ -147,7 +147,7 @@ cat > "$MOUNT_POINT/.gamecard/metadata.toml" <<EOF
 [game]
 name = "$GAME_NAME"
 id = "$GAME_ID"
-version = "1.0.0"
+version = "1.1.0"
 publisher = ""
 release_date = ""
 executable = "$EXECUTABLE"

@@ -142,7 +142,12 @@ if [ -n "$VENV_SITE_PKGS" ] && [ -d "$VENV_SITE_PKGS" ]; then
 fi
 
 # Copy shared libraries needed by Python modules
+echo "Copying shared libraries..."
 ldconfig -p 2>/dev/null | grep -E "libdbus-1|libgirepository|libcairo|libgobject|libglib" | awk '{print $NF}' | xargs -I {} sh -c 'cp {} "$1"/usr/lib/ 2>/dev/null || true' -- 
+
+# Copy .so files from the venv site-packages (like _gi.cpython-xxx.so)
+echo "Copying .so files..."
+find temp_venv/lib/python3* -name "*.so" -exec cp {} "${APP_DIR}/usr/lib/python3.13/site-packages/" \; 2>/dev/null || true
 
 deactivate
 cd - > /dev/null

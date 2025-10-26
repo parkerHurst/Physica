@@ -16,7 +16,7 @@ class PhysicaApplication(Adw.Application):
     """Main Physica GTK application class"""
     
     def __init__(self):
-        super().__init__(application_id='com.physica.Desktop',
+        super().__init__(application_id='org.physicaapp.Desktop',
                          flags=0)
         self.window = None
     

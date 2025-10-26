@@ -8,9 +8,9 @@ from typing import List, Dict, Optional, Callable
 class PhysicaDBusClient:
     """Client for communicating with Physica service via D-Bus"""
     
-    BUS_NAME = "com.physica.Manager"
-    OBJECT_PATH = "/com/physica/Manager"
-    INTERFACE_NAME = "com.physica.Manager"
+    BUS_NAME = "org.physicaapp.Manager"
+    OBJECT_PATH = "/org/physicaapp/Manager"
+    INTERFACE_NAME = "org.physicaapp.Manager"
     
     def __init__(self):
         """Initialize D-Bus client"""

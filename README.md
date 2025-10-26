@@ -18,21 +18,6 @@ Physica brings the nostalgic experience of physical game cartridges to modern PC
 
 ---
 
-## 🖼️ Screenshots
-
-### Memory Card Manager UI
-- View all games you've ever played (even when cartridge not inserted)
-- Launch games with one click
-- See playtime and last played date
-- Right-click for quick actions (launch, open location, remove from library)
-
-### Import Wizard
-- Easy game import with automatic USB formatting
-- Detects game executables and save locations
-- Configures Proton automatically
-
----
-
 ## 📋 Requirements
 
 - **OS:** Linux (tested on Omarchy)
@@ -55,7 +40,7 @@ cd Physica
 ./build_flatpak.sh
 
 # 3. Run Physica
-flatpak run io.github.physica.app
+flatpak run org.physicaapp.Physica
 ```
 
 ### Option B: Manual Installation

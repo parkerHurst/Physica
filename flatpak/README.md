@@ -6,7 +6,7 @@ This directory contains the Flatpak configuration files for distributing Physica
 
 ## Files
 
-- `io.github.physica.app.yml` - Flatpak manifest defining the application build process
+- `org.physicaapp.Physica.yml` - Flatpak manifest defining the application build process
 - `physica.desktop` - Desktop entry file for the application
 - `physica.svg` - Application icon
 - `build_flatpak.sh` - Build script for creating and installing the Flatpak
@@ -45,13 +45,13 @@ This will:
 ### Running
 
 ```bash
-flatpak run io.github.physica.app
+flatpak run org.physicaapp.Physica
 ```
 
 ### Uninstalling
 
 ```bash
-flatpak uninstall io.github.physica.app
+flatpak uninstall org.physicaapp.Physica
 ```
 
 ## Permissions
@@ -61,14 +61,14 @@ The Flatpak manifest includes the following permissions:
 - **Filesystem access**: Home directory, host filesystem (for USB drives), and read-only access to `/media`, `/run/media`, and `/mnt`
 - **D-Bus access**: System bus, session bus, UDisks2, and systemd
 - **Device access**: DRI (for graphics) and all devices (for USB)
-- **Owned D-Bus names**: `com.physica.Service` and `com.physica.App`
+- **Owned D-Bus names**: `org.physicaapp.Service` and `org.physicaapp.App`
 
 ## Publishing to Flathub
 
 To publish to Flathub:
 
 1. Fork the [Flathub repository](https://github.com/flathub/flathub)
-2. Create a new directory: `io.github.physica.app`
+2. Create a new directory: `org.physicaapp.Physica`
 3. Copy the manifest and related files
 4. Submit a pull request
 
@@ -83,7 +83,7 @@ If USB drives aren't detected:
 systemctl --user status udisks2
 
 # Check Flatpak permissions
-flatpak info io.github.physica.app
+flatpak info org.physicaapp.Physica
 ```
 
 ### D-Bus Service Issues
@@ -104,8 +104,8 @@ For development builds:
 
 ```bash
 # Build without installing
-flatpak-builder build flatpak/io.github.physica.app.yml
+flatpak-builder build flatpak/org.physicaapp.Physica.yml
 
 # Run from build directory
-flatpak-builder --run build flatpak/io.github.physica.app.yml physica
+flatpak-builder --run build flatpak/org.physicaapp.Physica.yml org.physicaapp.Physica
 ```

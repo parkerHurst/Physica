@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║              Physica Flatpak Build Script                 ║${NC}"
+echo -e "${BLUE}║               Physica Flatpak Build Script                 ║${NC}"
 echo -e "${BLUE}║         Physical Game Cartridge Manager for Linux          ║${NC}"
 echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
 echo ""
@@ -56,20 +56,20 @@ echo -e "${YELLOW}➜ Building Physica Flatpak...${NC}"
 
 # Build the Flatpak
 cd "$(dirname "$0")"
-flatpak-builder --force-clean --install-deps-from=flathub build flatpak/io.github.physica.app.yml
+flatpak-builder --force-clean --install-deps-from=flathub build flatpak/org.physicaapp.Physica.yml
 
 echo -e "${YELLOW}➜ Installing Physica Flatpak...${NC}"
 
 # Install the built Flatpak
-flatpak-builder --user --install --force-clean build flatpak/io.github.physica.app.yml
+flatpak-builder --user --install --force-clean build flatpak/org.physicaapp.Physica.yml
 
 echo -e "${GREEN}✓ Physica Flatpak installed successfully!${NC}"
 echo ""
 echo -e "${BLUE}To run Physica:${NC}"
-echo "  flatpak run io.github.physica.app"
+echo "  flatpak run org.physicaapp.Physica"
 echo ""
 echo -e "${BLUE}To uninstall:${NC}"
-echo "  flatpak uninstall io.github.physica.app"
+echo "  flatpak uninstall org.physicaapp.Physica"
 echo ""
 echo -e "${BLUE}To update:${NC}"
-echo "  flatpak update io.github.physica.app"
+echo "  flatpak update org.physicaapp.Physica"

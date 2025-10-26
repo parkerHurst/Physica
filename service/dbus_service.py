@@ -9,9 +9,9 @@ from typing import List, Dict, Optional
 class PhysicaDBusService(dbus.service.Object):
     """D-Bus service for game cartridge management"""
     
-    BUS_NAME = "com.physica.Manager"
-    OBJECT_PATH = "/com/physica/Manager"
-    INTERFACE_NAME = "com.physica.Manager"
+    BUS_NAME = "org.physicaapp.Manager"
+    OBJECT_PATH = "/org/physicaapp/Manager"
+    INTERFACE_NAME = "org.physicaapp.Manager"
     
     def __init__(self, scanner, launcher, registry, bus_name):
         """Initialize D-Bus service

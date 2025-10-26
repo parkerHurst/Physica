@@ -471,11 +471,17 @@ class ImportWizardDialog(Adw.Window):
             
             # Step 1: Unmount
             GLib.idle_add(self.prep_status_label.set_label, "Unmounting drive...")
-            result = subprocess.run(
-                ['udisksctl', 'unmount', '-b', self.usb_device],
-                capture_output=True,
-                text=True
-            )
+            # Try to unmount via udisksctl, fall back to D-Bus if not available
+            try:
+                result = subprocess.run(
+                    ['udisksctl', 'unmount', '-b', self.usb_device],
+                    capture_output=True,
+                    text=True
+                )
+            except FileNotFoundError:
+                # udisksctl not available, skip unmount
+                print("udisksctl not available, skipping unmount")
+                pass
             
             # Step 2: Format
             game_name = self.game_directory.name if self.game_directory else "GAME"
@@ -499,24 +505,52 @@ class ImportWizardDialog(Adw.Window):
             if not mkfs_cmd:
                 raise Exception("mkfs.ext4 not found in system")
             
-            format_result = subprocess.run(
-                ['pkexec', mkfs_cmd, '-F', '-L', safe_label, self.usb_device],
-                capture_output=True,
-                text=True
-            )
+            # Check if running in Flatpak
+            is_flatpak = os.path.exists('/.flatpak-info')
             
-            if format_result.returncode != 0:
-                error_msg = format_result.stderr or "Unknown error"
-                GLib.idle_add(self._show_prep_error, f"Format failed: {error_msg}")
+            if is_flatpak:
+                # In Flatpak, we cannot run pkexec or mkfs.ext4
+                # Skip formatting and show error
+                GLib.idle_add(self._show_prep_error, 
+                    "USB formatting is not supported in Flatpak sandbox.\n"
+                    "Please format the USB drive manually before importing.")
+                return
+            
+            try:
+                format_result = subprocess.run(
+                    ['pkexec', mkfs_cmd, '-F', '-L', safe_label, self.usb_device],
+                    capture_output=True,
+                    text=True,
+                    timeout=60
+                )
+                
+                if format_result.returncode != 0:
+                    error_msg = format_result.stderr or "Unknown error"
+                    GLib.idle_add(self._show_prep_error, f"Format failed: {error_msg}")
+                    return
+            except FileNotFoundError:
+                GLib.idle_add(self._show_prep_error, 
+                    "pkexec or mkfs.ext4 not found.\n"
+                    "Please format the USB drive manually before importing.")
+                return
+            except subprocess.TimeoutExpired:
+                GLib.idle_add(self._show_prep_error, 
+                    "Formatting timed out.\n"
+                    "Please format the USB drive manually before importing.")
                 return
             
             # Step 3: Mount
             GLib.idle_add(self.prep_status_label.set_label, "Mounting...")
-            mount_result = subprocess.run(
-                ['udisksctl', 'mount', '-b', self.usb_device],
-                capture_output=True,
-                text=True
-            )
+            try:
+                mount_result = subprocess.run(
+                    ['udisksctl', 'mount', '-b', self.usb_device],
+                    capture_output=True,
+                    text=True
+                )
+            except FileNotFoundError:
+                # udisksctl not available, mount will happen automatically
+                print("udisksctl not available, mount will happen automatically")
+                mount_result = type('obj', (object,), {'returncode': 0})
             
             if mount_result.returncode != 0:
                 GLib.idle_add(self._show_prep_error, f"Mount failed: {mount_result.stderr}")
@@ -534,15 +568,19 @@ class ImportWizardDialog(Adw.Window):
             import os
             username = os.getenv('USER', 'phurst')
             
-            # Use pkexec to change ownership
-            chown_result = subprocess.run(
-                ['pkexec', 'chown', '-R', f'{username}:{username}', str(self.usb_mount_point)],
-                capture_output=True,
-                text=True
-            )
-            
-            if chown_result.returncode != 0:
-                print(f"Warning: Could not set permissions: {chown_result.stderr}")
+            # Use pkexec to change ownership (if not in Flatpak)
+            if not is_flatpak:
+                try:
+                    chown_result = subprocess.run(
+                        ['pkexec', 'chown', '-R', f'{username}:{username}', str(self.usb_mount_point)],
+                        capture_output=True,
+                        text=True
+                    )
+                    
+                    if chown_result.returncode != 0:
+                        print(f"Warning: Could not set permissions: {chown_result.stderr}")
+                except FileNotFoundError:
+                    print("Warning: pkexec not available, skipping chown")
             
             # Success!
             GLib.idle_add(self._show_prep_success)

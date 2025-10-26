@@ -54,21 +54,24 @@ The installer will:
 - ✅ Add desktop entry
 - ✅ Configure autostart for the service
 
-### Option B: AppImage (Recommended for Steam Deck)
+### Option B: AppImage (For Steam Deck)
 
-**Download the latest AppImage:**
+**Important:** The AppImage must be built on the same system where it will be used due to Python version dependencies. 
+
+**To build the AppImage:**
 ```bash
-# Download from GitHub releases
-wget https://github.com/parkerHurst/Physica/releases/download/v1.1.1/Physica-1.1.1-STEAMDECK.AppImage
-
-# Make executable
-chmod +x Physica-1.1.1-STEAMDECK.AppImage
-
-# Run
-./Physica-1.1.1-STEAMDECK.AppImage
+git clone https://github.com/parkerHurst/Physica.git
+cd Physica
+./build_appimage.sh
 ```
 
-**Note:** The AppImage requires GTK4 on the host system. On Steam Deck Desktop Mode, GTK4 is typically pre-installed.
+**Run the AppImage:**
+```bash
+chmod +x build_appimage/Physica-1.1.2-STEAMDECK.AppImage
+./build_appimage/Physica-1.1.2-STEAMDECK.AppImage
+```
+
+**Requirements:** The AppImage requires GTK4 and matching Python version on the host system.
 
 ### Prerequisites
 

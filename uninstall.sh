@@ -46,9 +46,10 @@ rm -f "$HOME/.local/bin/physica"
 rm -f "$HOME/.local/bin/physica-service"
 echo "  ✓ Launchers removed"
 
-# Remove desktop entry
+# Remove desktop entry and icon
 rm -f "$HOME/.local/share/applications/physica.desktop"
-echo "  ✓ Desktop entry removed"
+rm -f "$HOME/.local/share/icons/hicolor/scalable/apps/physica.svg"
+echo "  ✓ Desktop entry and icon removed"
 
 # Remove autostart
 rm -f "$HOME/.config/autostart/physica-service.desktop"

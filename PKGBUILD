@@ -73,13 +73,16 @@ EOF
     chmod +x "$pkgdir/usr/bin/physica-service"
     chmod +x "$pkgdir/usr/bin/physica"
     
+    # Install icon
+    install -Dm644 physica.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/physica.svg"
+    
     # Install desktop entry
     install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/physica.desktop" << 'EOF'
 [Desktop Entry]
 Name=Physica
 Comment=Physical Game Cartridge Manager
 Exec=physica
-Icon=applications-games
+Icon=physica
 Terminal=false
 Type=Application
 Categories=Game;Utility;

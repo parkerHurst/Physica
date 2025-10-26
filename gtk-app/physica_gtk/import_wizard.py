@@ -505,15 +505,6 @@ class ImportWizardDialog(Adw.Window):
             if not mkfs_cmd:
                 raise Exception("mkfs.ext4 not found in system")
             
-            # Check if running in Flatpak
-            is_flatpak = os.path.exists('/.flatpak-info')
-            
-            if is_flatpak:
-                # In Flatpak, we cannot run pkexec or mkfs.ext4
-                # Show manual formatting instructions
-                GLib.idle_add(self._show_manual_format_instruction)
-                return
-            
             try:
                 format_result = subprocess.run(
                     ['pkexec', mkfs_cmd, '-F', '-L', safe_label, self.usb_device],
@@ -566,19 +557,18 @@ class ImportWizardDialog(Adw.Window):
             import os
             username = os.getenv('USER', 'phurst')
             
-            # Use pkexec to change ownership (if not in Flatpak)
-            if not is_flatpak:
-                try:
-                    chown_result = subprocess.run(
-                        ['pkexec', 'chown', '-R', f'{username}:{username}', str(self.usb_mount_point)],
-                        capture_output=True,
-                        text=True
-                    )
-                    
-                    if chown_result.returncode != 0:
-                        print(f"Warning: Could not set permissions: {chown_result.stderr}")
-                except FileNotFoundError:
-                    print("Warning: pkexec not available, skipping chown")
+            # Use pkexec to change ownership
+            try:
+                chown_result = subprocess.run(
+                    ['pkexec', 'chown', '-R', f'{username}:{username}', str(self.usb_mount_point)],
+                    capture_output=True,
+                    text=True
+                )
+                
+                if chown_result.returncode != 0:
+                    print(f"Warning: Could not set permissions: {chown_result.stderr}")
+            except FileNotFoundError:
+                print("Warning: pkexec not available, skipping chown")
             
             # Success!
             GLib.idle_add(self._show_prep_success)
@@ -597,87 +587,6 @@ class ImportWizardDialog(Adw.Window):
         """Show preparation error"""
         self.prep_status_label.set_markup(f"<b>❌ Error:</b> {error_msg}")
         self.back_button.set_sensitive(True)
-    
-    def _show_manual_format_instruction(self):
-        """Show manual formatting instructions for Flatpak users"""
-        from gi.repository import Gtk
-        
-        # Get the format command
-        game_name = self.game_directory.name if self.game_directory else "GAME"
-        safe_label = game_name.upper().replace(" ", "_")[:16]
-        format_cmd = f"pkexec mkfs.ext4 -F -L {safe_label} {self.usb_device}"
-        
-        # Create instruction box
-        instruction_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
-        instruction_box.set_margin_start(24)
-        instruction_box.set_margin_end(24)
-        
-        # Title
-        title = Gtk.Label(label="Format USB Drive")
-        title.add_css_class("title-2")
-        instruction_box.append(title)
-        
-        # Instructions
-        instructions = Gtk.Label(label="In Flatpak, USB formatting requires running a command in a terminal.")
-        instructions.set_wrap(True)
-        instruction_box.append(instructions)
-        
-        # Command label
-        cmd_label = Gtk.Label(label="Run this command:")
-        cmd_label.set_halign(Gtk.Align.START)
-        cmd_label.add_css_class("caption")
-        instruction_box.append(cmd_label)
-        
-        # Command entry with copy button
-        cmd_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-        cmd_entry = Gtk.Entry()
-        cmd_entry.set_text(format_cmd)
-        cmd_entry.set_editable(False)
-        cmd_entry.set_hexpand(True)
-        cmd_box.append(cmd_entry)
-        
-        # Copy button
-        copy_button = Gtk.Button(label="Copy")
-        copy_button.connect("clicked", lambda btn: self._copy_to_clipboard(format_cmd))
-        cmd_box.append(copy_button)
-        
-        instruction_box.append(cmd_box)
-        
-        # After running command message
-        ready_label = Gtk.Label(label="After formatting is complete, click 'Continue' below.")
-        ready_label.set_wrap(True)
-        instruction_box.append(ready_label)
-        
-        # Add a Continue button
-        continue_button = Gtk.Button(label="Continue")
-        continue_button.add_css_class("suggested-action")
-        continue_button.connect("clicked", self._on_format_continue_clicked)
-        instruction_box.append(continue_button)
-        
-        # Replace prep_status_label with instruction_box
-        # Store the parent to add instruction_box after removing prep_status_label
-        parent = self.prep_status_label.get_parent()
-        parent.remove(self.prep_status_label)
-        parent.append(instruction_box)
-        
-        # Update button sensitivity
-        self.next_button.set_sensitive(False)
-        self.back_button.set_sensitive(True)
-    
-    def _copy_to_clipboard(self, text):
-        """Copy text to clipboard"""
-        from gi.repository import Gdk, Gtk
-        display = Gdk.Display.get_default()
-        if display:
-            clipboard = display.get_clipboard()
-            clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
-            clipboard.store_async(None, None, None)
-    
-    def _on_format_continue_clicked(self, button):
-        """Handle continue after manual formatting"""
-        # Re-run the prepare function but skip the format step
-        self._import_prepared = True
-        self._show_prep_success()
     
     def _show_confirm_page(self):
         """Show confirmation page"""
@@ -768,14 +677,7 @@ class ImportWizardDialog(Adw.Window):
         """Run the import process"""
         try:
             # Call import_game.py script
-            # Check if running in Flatpak
-            import os
-            if os.path.exists('/app/lib/python3.13/scripts/import_game.py'):
-                import_script = Path('/app/lib/python3.13/scripts/import_game.py')
-            elif os.path.exists('/app/lib/python3.12/scripts/import_game.py'):
-                import_script = Path('/app/lib/python3.12/scripts/import_game.py')
-            else:
-                import_script = Path(__file__).parent.parent.parent / "scripts" / "import_game.py"
+            import_script = Path(__file__).parent.parent.parent / "scripts" / "import_game.py"
             
             print(f"Starting import: {self.game_directory} -> {self.usb_mount_point}")
             print(f"Import script: {import_script}")

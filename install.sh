@@ -4,6 +4,9 @@
 
 set -e  # Exit on error
 
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║            Physica Installation Script v1.0.2              ║"
 echo "║         Physical Game Cartridge Manager for Linux          ║"
@@ -163,12 +166,21 @@ echo -e "${GREEN}✓ Launchers created${NC}"
 echo ""
 echo -e "${YELLOW}➜ Creating desktop entry...${NC}"
 
+# Install icon (from source directory)
+if [ -f "$SCRIPT_DIR/physica.svg" ]; then
+    install -Dm644 "$SCRIPT_DIR/physica.svg" "$HOME/.local/share/icons/hicolor/scalable/apps/physica.svg"
+    echo -e "${GREEN}✓ Icon installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Icon file not found, skipping${NC}"
+fi
+
+# Install desktop entry
 cat > "$HOME/.local/share/applications/physica.desktop" << EOF
 [Desktop Entry]
 Name=Physica
 Comment=Physical Game Cartridge Manager
 Exec=$BIN_DIR/physica
-Icon=applications-games
+Icon=physica
 Terminal=false
 Type=Application
 Categories=Game;Utility;
